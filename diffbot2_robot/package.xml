@@ -1,32 +1,32 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-	<name>diffbot2_robot</name>
-	<version>0.0.0</version>
-	<description>Meta-package of the diffbot2 robot</description>
+  <name>diffbot2_robot</name>
+  <version>0.0.0</version>
+  <description>Meta-package of the diffbot2 robot</description>
 
-	<maintainer email="mateus.amarujo@gmail.com">Mateus Amarante</maintainer>
-	<maintainer email="ivan1993br@gmail.com">Ivan Tarifa</maintainer>
+  <maintainer email="mateus.amarujo@gmail.com">Mateus Amarante</maintainer>
+  <maintainer email="ivan1993br@gmail.com">Ivan Tarifa</maintainer>
 
-	<author email="mateus.amarujo@gmail.com">Mateus Amarante</author>
-	<author email="ivan1993br@gmail.com">Ivan Tarifa</author>
+  <author email="mateus.amarujo@gmail.com">Mateus Amarante</author>
+  <author email="ivan1993br@gmail.com">Ivan Tarifa</author>
 
-	<license>Apache License 2.0</license>
+  <license>Apache License 2.0</license>
 
-	<buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
 
-	<exec_depend>diffbot2_bringup</exec_depend>
-	<exec_depend>diffbot2_control</exec_depend>
-	<exec_depend>diffbot2_description</exec_depend>
-	<exec_depend>diffbot2_navigation</exec_depend>
-	<exec_depend>diffbot2_perception</exec_depend>
+  <exec_depend>diffbot2_bringup</exec_depend>
+  <exec_depend>diffbot2_control</exec_depend>
+  <exec_depend>diffbot2_description</exec_depend>
+  <exec_depend>diffbot2_navigation</exec_depend>
+  <exec_depend>diffbot2_perception</exec_depend>
 
-	<test_depend>ament_lint_auto</test_depend>
-	<test_depend>ament_lint_cmake</test_depend>
-	<test_depend>ament_xmllint</test_depend>
-	<test_depend>diffbot_tests</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_cmake</test_depend>
+  <test_depend>ament_xmllint</test_depend>
+  <test_depend>diffbot_tests</test_depend>
 
-	<export>
-		<build_type>ament_cmake	</build_type>
-	</export>
+  <export>
+    <build_type>ament_cmake	</build_type>
+  </export>
 </package>
