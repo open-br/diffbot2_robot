@@ -6,32 +6,18 @@ jobs:
   build_and_test:
     name: build_and_test
     runs-on: ubuntu-20.04
-    strategy:
-      fail-fast: false
-      matrix:
-        linter: [xmllint, lint_cmake]
     steps:
       - uses: ros-tooling/setup-ros@0.0.25
       - uses: ros-tooling/action-ros-ci@0.0.18
         with:
           import-token: ${{ secrets.ROS_CI }}
-          id: action_ros_ci_step
-          package-name: diffbot2_robot
+          package-name: 
+            diffbot2_bringup
+            diffbot2_control
+            diffbot2_description
+            diffbot2_navigation
+            diffbot2_perception
+            diffbot2_robot
+            diffbot2_tests
           target-ros2-distro: foxy
-      # - uses: ros-tooling/action-ros-lint@master
-      #   with:
-      #     package-name: 
-      #       diffbot2_bringup
-      #       diffbot2_control
-      #       diffbot2_description
-      #       diffbot2_navigation
-      #       diffbot2_perception
-      #       diffbot2_robot
-      #       diffbot2_tests
-      #     linter: ${{ matrix.linter }}
-      #     distribution: foxy
-      # - uses: actions/upload-artifact@v1
-      #   with:
-      #     name: colcon-logs
-      #     path: ${{ steps.action_ros_ci_step.outputs.ros-workspace-directory-name }}/log
-      # - if: always()
+          vcs-repo-file-url: ${{ github.workspace }}/diffbot2.repos
