@@ -17,7 +17,7 @@ jobs:
           import-token: ${{ secrets.ROS_CI }}
           id: action_ros_ci_step
           package-name: diffbot2_robot
-          target-ros2-distro: ${{ matrix.ros_distribution }}
+          target-ros2-distro: foxy
       - uses: ros-tooling/action-ros-lint@master
         with:
           package-name: 
@@ -30,3 +30,8 @@ jobs:
             diffbot2_tests
           linter: ${{ matrix.linter }}
           distribution: foxy
+      - uses: actions/upload-artifact@v1
+        with:
+          name: colcon-logs
+          path: ${{ steps.action_ros_ci_step.outputs.ros-workspace-directory-name }}/log
+      - if: always()
