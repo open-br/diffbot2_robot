@@ -8,12 +8,9 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-        with:  
-          token: ${{ secrets.ROS_CI }}
       - uses: ros-tooling/setup-ros@0.0.25
       - uses: ros-tooling/action-ros-ci@0.0.18
         with:
-          import-token: ${{ secrets.ROS_CI }}
           package-name: 
             diffbot2_bringup
             diffbot2_control
