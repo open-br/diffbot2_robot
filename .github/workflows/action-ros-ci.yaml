@@ -1,6 +1,6 @@
 name: Colcon build and test
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   build_and_test:
@@ -9,17 +9,24 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ros_distribution: [dashing, foxy]
         linter: [xmllint, lint_cmake]
     steps:
       - uses: ros-tooling/setup-ros@0.0.25
-      - uses: ros-tooling/action-ros-lint@master
-        with:
-          linter: ${{ matrix.linter }}
-          distribution: ${{ matrix.ros_distribution }}
       - uses: ros-tooling/action-ros-ci@0.0.18
         with:
           import-token: ${{ secrets.ROS_CI }}
           id: action_ros_ci_step
           package-name: diffbot2_robot
           target-ros2-distro: ${{ matrix.ros_distribution }}
+      - uses: ros-tooling/action-ros-lint@master
+        with:
+          package-name: 
+            diffbot2_bringup
+            diffbot2_control
+            diffbot2_description
+            diffbot2_navigation
+            diffbot2_perception
+            diffbot2_robot
+            diffbot2_tests
+          linter: ${{ matrix.linter }}
+          distribution: foxy
