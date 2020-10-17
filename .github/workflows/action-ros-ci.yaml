@@ -18,20 +18,20 @@ jobs:
           id: action_ros_ci_step
           package-name: diffbot2_robot
           target-ros2-distro: foxy
-      - uses: ros-tooling/action-ros-lint@master
-        with:
-          package-name: 
-            diffbot2_bringup
-            diffbot2_control
-            diffbot2_description
-            diffbot2_navigation
-            diffbot2_perception
-            diffbot2_robot
-            diffbot2_tests
-          linter: ${{ matrix.linter }}
-          distribution: foxy
-      - uses: actions/upload-artifact@v1
-        with:
-          name: colcon-logs
-          path: ${{ steps.action_ros_ci_step.outputs.ros-workspace-directory-name }}/log
-      - if: always()
+      # - uses: ros-tooling/action-ros-lint@master
+      #   with:
+      #     package-name: 
+      #       diffbot2_bringup
+      #       diffbot2_control
+      #       diffbot2_description
+      #       diffbot2_navigation
+      #       diffbot2_perception
+      #       diffbot2_robot
+      #       diffbot2_tests
+      #     linter: ${{ matrix.linter }}
+      #     distribution: foxy
+      # - uses: actions/upload-artifact@v1
+      #   with:
+      #     name: colcon-logs
+      #     path: ${{ steps.action_ros_ci_step.outputs.ros-workspace-directory-name }}/log
+      # - if: always()
