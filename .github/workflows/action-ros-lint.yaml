@@ -1,4 +1,4 @@
-name: ROS Lint
+name: Ament Lint
 
 on: [push, pull_request]
 
@@ -6,6 +6,7 @@ jobs:
   ament_lint:
     name: build_and_test
     runs-on: ubuntu-20.04
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != 'open-br/diffbot2_robot'
     strategy:
       fail-fast: false
       matrix:
