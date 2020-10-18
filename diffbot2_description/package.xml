@@ -17,9 +17,9 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <test_depend>ament_lint_auto</test_depend>
-  <test_depend>ament_lint_cmake</test_depend>
-  <test_depend>ament_xmllint</test_depend>
+  <test_depend>ament_cmake_lint_auto</test_depend>
+  <test_depend>ament_cmake_lint_cmake</test_depend>
+  <test_depend>ament_cmake_xmllint</test_depend>
 
   <export>
     <build_type>ament_cmake</build_type>
