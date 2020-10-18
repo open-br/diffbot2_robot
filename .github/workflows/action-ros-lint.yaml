@@ -1,17 +1,23 @@
-name: Colcon build and test
+name: ROS Lint
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
-  build_and_test:
+  ament_lint:
     name: build_and_test
     runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+          linter: [xmllint, lint_cmake]
     steps:
       - uses: actions/checkout@v2
       - uses: ros-tooling/setup-ros@0.0.25
-      - uses: ros-tooling/action-ros-ci@0.0.19
+      - uses: ros-tooling/action-ros-lint@master
         with:
-          package-name: 
+          distribution: foxy
+          linter: ${{ matrix.linter }}
+          package-name: your_package_name
             diffbot2_bringup
             diffbot2_control
             diffbot2_description
@@ -19,5 +25,3 @@ jobs:
             diffbot2_perception
             diffbot2_robot
             diffbot2_tests
-          target-ros2-distro: foxy
-          vcs-repo-file-url: ""
