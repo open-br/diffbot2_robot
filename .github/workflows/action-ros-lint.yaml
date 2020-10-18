@@ -1,12 +1,11 @@
 name: Ament Lint
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   ament_lint:
     name: ament_lint
     runs-on: ubuntu-20.04
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != 'open-br/diffbot2_robot'
     strategy:
       fail-fast: false
       matrix:
@@ -19,10 +18,6 @@ jobs:
           distribution: foxy
           linter: ${{ matrix.linter }}
           package-name: your_package_name
-            diffbot2_bringup
             diffbot2_control
             diffbot2_description
-            diffbot2_navigation
-            diffbot2_perception
             diffbot2_robot
-            diffbot2_tests
