@@ -6,12 +6,12 @@ jobs:
   ament_lint:
     name: build_and_test
     runs-on: ubuntu-20.04
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != 'open-br/diffbot2_robot'
     strategy:
       fail-fast: false
       matrix:
           linter: [xmllint, lint_cmake]
     steps:
+      - uses: fkirc/skip-duplicate-actions@master
       - uses: actions/checkout@v2
       - uses: ros-tooling/setup-ros@0.0.25
       - uses: ros-tooling/action-ros-lint@master
