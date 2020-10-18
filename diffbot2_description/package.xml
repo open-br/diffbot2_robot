@@ -9,11 +9,11 @@
   <maintainer email="ivan1993br@gmail.com">Ivan Tarifa</maintainer>
   <maintainer email="caioaamaral@gmail.com">Caio Amaral</maintainer>
 
+  <license>Apache License 2.0</license>
+
   <author email="mateus.amarujo@gmail.com">Mateus Amarante</author>
   <author email="ivan1993br@gmail.com">Ivan Tarifa</author>
   <author email="caioaamaral@gmail.com">Caio Amaral</author>
-
-  <license>Apache License 2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
@@ -22,6 +22,6 @@
   <test_depend>ament_xmllint</test_depend>
 
   <export>
-    <build_type>ament_cmake	</build_type>
+    <build_type>ament_cmake</build_type>
   </export>
 </package>
