@@ -1,6 +1,6 @@
 name: Ament Lint
 
-on: [push]
+on: [pull_request]
 
 jobs:
   ament_lint:
@@ -17,7 +17,7 @@ jobs:
         with:
           distribution: foxy
           linter: ${{ matrix.linter }}
-          package-name: your_package_name
+          package-name:
             diffbot2_control
             diffbot2_description
             diffbot2_robot
