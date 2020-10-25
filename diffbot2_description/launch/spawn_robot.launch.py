@@ -15,10 +15,10 @@
 # limitations under the License.
 
 
+import ament_index_python
 import launch
 import launch_ros
 import xacro
-import ament_index_python
 
 
 def generate_launch_description():
