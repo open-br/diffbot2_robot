@@ -2,13 +2,13 @@
 <robot name="diffbot2"
   xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <!-- Properties -->
-  <xacro:arg name="base_width" default="0.3"/>
-  <xacro:property name="base_length" default="0.4"/>
-  <xacro:property name="base_height" default="0.08"/>
+  <!-- Arguments -->
+  <xacro:arg name="base_width" default="0.5"/>
+  <xacro:arg name="base_length" default="0.8"/>
+  <xacro:arg name="base_height" default="0.2"/>
 
-  <xacro:property name="wheel_radius" default="0.05"/>
-  <xacro:property name="wheel_thickness" default="0.1"/>
+  <xacro:arg name="wheel_radius" default="0.2"/>
+  <xacro:arg name="wheel_thickness" default="0.1"/>
 
   <!-- Include macros -->
   <xacro:include filename="$(find diffbot2_description)/urdf/wheel.xacro"/>
@@ -22,23 +22,26 @@
     </inertial>
     <visual>
       <geometry>
-        <box size="${base_length} $(arg base_width) ${base_height}"/>
+        <box size="$(arg base_length) $(arg base_width) $(arg base_height)"/>
       </geometry>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
     </visual>
     <collision>
       <origin xyz="0 0 0"/>
       <geometry>
-        <box size="${base_length} $(arg base_width) ${base_height}"/>
+        <box size="$(arg base_length) $(arg base_width) $(arg base_height)"/>
       </geometry>
     </collision>
   </link>
 
   <!-- Wheels -->
-  <xacro:wheel name="left_wheel" parent="base_link" radius="${wheel_radius}" thickness="${wheel_thickness}">
-    <origin xyz="0 ${$(arg base_width)/2 + wheel_thickness/2} 0" rpy="${-pi/2.} 0 0"/>
+  <xacro:wheel name="left_wheel" parent="base_link" radius="$(arg wheel_radius)" thickness="$(arg wheel_thickness)">
+    <origin xyz="0 ${$(arg base_width)/2 + $(arg wheel_thickness)/2} 0" rpy="${-pi/2.} 0 0"/>
   </xacro:wheel>
-  <xacro:wheel name="right_wheel" parent="base_link" radius="${wheel_radius}" thickness="${wheel_thickness}">
-    <origin xyz="0 ${-$(arg base_width)/2. - wheel_thickness/2.} 0" rpy="${pi/2.} 0 0"/>
+  <xacro:wheel name="right_wheel" parent="base_link" radius="$(arg wheel_radius)" thickness="$(arg wheel_thickness)">
+    <origin xyz="0 ${-$(arg base_width)/2. - $(arg wheel_thickness)/2.} 0" rpy="${pi/2.} 0 0"/>
   </xacro:wheel>
 
 </robot>
