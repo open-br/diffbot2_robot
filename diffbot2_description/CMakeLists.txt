@@ -10,7 +10,7 @@ if(BUILD_TESTING)
 endif()
 
 # Install share files
-install(DIRECTORY launch urdf
+install(DIRECTORY launch urdf rviz
   DESTINATION share/${PROJECT_NAME}
 )
 
