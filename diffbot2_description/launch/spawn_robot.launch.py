@@ -15,33 +15,49 @@
 # limitations under the License.
 
 
-import ament_index_python
-import launch
-import launch_ros
+import os
+
+from ament_index_python import get_package_share_directory
+from launch import LaunchDescription
+from launch_ros.actions import Node
+
 import xacro
 
 
 def generate_launch_description():
-    pkg_share = ament_index_python.get_package_share_directory(
-        "diffbot2_description", "alo", "alow"
-    )
-    xacro_file = pkg_share + "/urdf/diffbot2.xacro"
+    # Get dir names
+    pkg_share = get_package_share_directory("diffbot2_description")
+
+    # Compute robot_description string
+    xacro_file = os.path.join(pkg_share, "urdf/diffbot2.xacro")
     robot_description = xacro.process(xacro_file)
-    return launch.LaunchDescription(
-        [
-            launch_ros.actions.Node(
-                package="robot_state_publisher",
-                executable="robot_state_publisher",
-                name="robot_state_publisher",
-                output="screen",
-                parameters=[{"robot_description": robot_description}],
-            ),
-            launch_ros.actions.Node(
-                package="joint_state_publisher",
-                executable="joint_state_publisher",
-                name="joint_state_publisher",
-                output="screen",
-                parameters=[{"robot_description": robot_description}],
-            ),
-        ]
+
+    # Launch description
+    launch_description = LaunchDescription()
+
+    # Define parameters
+    common_params = {
+        "robot_description": robot_description,
+    }
+
+    # Add nodes
+    launch_description.add_action(
+        Node(
+            package="robot_state_publisher",
+            executable="robot_state_publisher",
+            name="robot_state_publisher",
+            output="screen",
+            parameters=[common_params],
+        )
     )
+    launch_description.add_action(
+        Node(
+            package="joint_state_publisher",
+            executable="joint_state_publisher",
+            name="joint_state_publisher",
+            output="screen",
+            parameters=[common_params],
+        ),
+    )
+
+    return launch_description
