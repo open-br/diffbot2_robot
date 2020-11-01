@@ -14,8 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
 from launch.substitutions import PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
@@ -23,19 +24,19 @@ from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
     # Get rviz config
-    rviz_config = PathJoinSubstitution(
-        [FindPackageShare('diffbot2_description'), 'rviz/view_robot.rviz']
-    )
+    rviz_config = PathJoinSubstitution([
+        FindPackageShare('diffbot2_description'), 'rviz/view_robot.rviz'
+    ])
 
     # OBS: do not add rviz2 as dependency because it is heavy
-    return LaunchDescription(
-        [
-            Node(
-                package='rviz2',
-                executable='rviz2',
-                name='rviz',
-                output='screen',
-                arguments=['-d', rviz_config],
-            )
-        ]
-    )
+    return LaunchDescription([
+        DeclareLaunchArgument(name='namespace', default_value='', description='Node namespace'),
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            name='rviz',
+            output='screen',
+            namespace=LaunchConfiguration('namespace'),
+            arguments=['-d', rviz_config],
+        )
+    ])
