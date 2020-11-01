@@ -14,12 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 import os
 
 from ament_index_python import get_package_share_directory
+import launch
 from launch import LaunchDescription
 from launch_ros.actions import Node
+from launch.substitutions import LaunchConfiguration
 import xacro
 
 
@@ -41,11 +42,17 @@ def generate_launch_description():
 
     # Add nodes
     launch_description.add_action(
+        launch.actions.DeclareLaunchArgument(
+            name='namespace', default_value='', description='Node namespace'
+        )
+    )
+    launch_description.add_action(
         Node(
             package='robot_state_publisher',
             executable='robot_state_publisher',
             name='robot_state_publisher',
             output='screen',
+            namespace=LaunchConfiguration('namespace'),
             parameters=[common_params],
         )
     )
@@ -55,6 +62,7 @@ def generate_launch_description():
             executable='joint_state_publisher',
             name='joint_state_publisher',
             output='screen',
+            namespace=LaunchConfiguration('namespace'),
             parameters=[common_params],
         ),
     )
