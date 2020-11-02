@@ -13,8 +13,9 @@ if(BUILD_TESTING)
 endif()
 
 # Install share files
-install(DIRECTORY launch urdf rviz
+install(DIRECTORY launch urdf
   DESTINATION share/${PROJECT_NAME}
+  PATTERN "view_robot.launch.py" EXCLUDE
 )
 
 ament_package()
