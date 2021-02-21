@@ -27,7 +27,7 @@ import rclpy.node
 
 def generate_test_description():
     share_dir = FindPackageShare('diffbot2_description')
-    spawn_launch_path = PathJoinSubstitution([share_dir, 'launch/spawn_robot.launch.py'])
+    spawn_launch_path = PathJoinSubstitution([share_dir, 'launch', 'spawn_robot.launch.py'])
     spawn_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(spawn_launch_path),
         launch_arguments={'namespace': 'ns'}.items(),
