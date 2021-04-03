@@ -12,17 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import time
 import unittest
 
 import launch
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import PathJoinSubstitution
-from launch_ros.actions import Node
+from launch_ros.actions import Node as LaunchNode
 from launch_ros.substitutions import FindPackageShare
 import launch_testing
 import launch_testing.asserts
-import rclpy.node
+import rclpy
+from rclpy.node import Node
 
 
 def generate_test_description():
@@ -36,9 +38,6 @@ def generate_test_description():
     return (
         launch.LaunchDescription([
             spawn_launch,
-            # Start tests right away - no need to wait for anything in this example.
-            # In a more complicated launch description, we might want this action happen
-            # once some process starts or once some other event happens
             launch_testing.actions.ReadyToTest(),
         ]),
         {
@@ -49,11 +48,16 @@ def generate_test_description():
 
 class TestSpawnLaunchInterface(unittest.TestCase):
 
+    @classmethod
+    def setUpClass(cls) -> None:
+        rclpy.init()
+        cls.this_node = Node('test_node')
+
     def test_node_names(self, proc_info, spawn_launch):
         self.assertEqual(1, len(spawn_launch.get_sub_entities()))
         nodes = list(
             filter(
-                lambda entity: isinstance(entity, Node),
+                lambda entity: isinstance(entity, LaunchNode),
                 spawn_launch.get_sub_entities()[0].entities
             )
         )
@@ -65,14 +69,28 @@ class TestSpawnLaunchInterface(unittest.TestCase):
             self.assertTrue(node.is_node_name_fully_specified())
             self.assertIn(node.node_name, expected_nodes)
 
+    def get_topic_names_and_types(self, expected, timeout):
+        """Make sure discovery has found all 'expected' topics."""
+        start = time.monotonic()
+        while True:
+            topics = self.this_node.get_topic_names_and_types()
+            now = time.monotonic()
+            if all(expected_topic in topics for expected_topic in expected):
+                return topics
+            elif (now - start) > timeout:
+                return None
+
     def test_topics(self):
-        rclpy.init()
-        node = rclpy.node.Node('me')
-        topics = node.get_topic_names_and_types()
-        self.assertIn(('/ns/joint_states', ['sensor_msgs/msg/JointState']), topics)
-        self.assertIn(('/ns/robot_description', ['std_msgs/msg/String']), topics)
-        self.assertIn(('/tf', ['tf2_msgs/msg/TFMessage']), topics)
-        self.assertIn(('/tf_static', ['tf2_msgs/msg/TFMessage']), topics)
+        expected = [
+            ('/ns/joint_states', ['sensor_msgs/msg/JointState']),
+            ('/ns/robot_description', ['std_msgs/msg/String']),
+            ('/tf', ['tf2_msgs/msg/TFMessage']),
+            ('/tf_static', ['tf2_msgs/msg/TFMessage'])
+        ]
+        topics = self.get_topic_names_and_types(expected, timeout=0.5)
+
+        for expected_topic in expected:
+            self.assertIn(expected_topic, topics)
 
 
 @launch_testing.post_shutdown_test()
