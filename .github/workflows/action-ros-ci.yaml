@@ -23,6 +23,6 @@ jobs:
           vcs-repo-file-url: ""
       - uses: actions/upload-artifact@v1
         with:
-          if: failure() # upload the logs even when the build fails
+          if: failure()
           name: colcon-logs
           path: ${{ steps.action_ros_ci_step.outputs.ros-workspace-directory-name }}/build/diffbot2_description/test_results/diffbot2_description
