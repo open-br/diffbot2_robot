@@ -69,7 +69,20 @@ class TestSpawnLaunchInterface(unittest.TestCase):
             self.assertTrue(node.is_node_name_fully_specified())
             self.assertIn(node.node_name, expected_nodes)
 
-    def get_topic_names_and_types(self, expected, timeout):
+    def test_topics(self):
+        expected = [
+            ('/ns/joint_states', ['sensor_msgs/msg/JointState']),
+            ('/ns/robot_description', ['std_msgs/msg/String']),
+            ('/tf', ['tf2_msgs/msg/TFMessage']),
+            ('/tf_static', ['tf2_msgs/msg/TFMessage'])
+        ]
+        topics = self.__get_topic_names_and_types(expected, timeout=0.5)
+        self.assertIsNotNone(topics)
+
+        for expected_topic in expected:
+            self.assertIn(expected_topic, topics)
+
+    def __get_topic_names_and_types(self, expected, timeout):
         """Make sure discovery has found all 'expected' topics."""
         start = time.monotonic()
         while True:
@@ -79,18 +92,6 @@ class TestSpawnLaunchInterface(unittest.TestCase):
                 return topics
             elif (now - start) > timeout:
                 return None
-
-    def test_topics(self):
-        expected = [
-            ('/ns/joint_states', ['sensor_msgs/msg/JointState']),
-            ('/ns/robot_description', ['std_msgs/msg/String']),
-            ('/tf', ['tf2_msgs/msg/TFMessage']),
-            ('/tf_static', ['tf2_msgs/msg/TFMessage'])
-        ]
-        topics = self.get_topic_names_and_types(expected, timeout=0.5)
-
-        for expected_topic in expected:
-            self.assertIn(expected_topic, topics)
 
 
 @launch_testing.post_shutdown_test()
