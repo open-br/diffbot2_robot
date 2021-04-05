@@ -12,7 +12,7 @@ jobs:
           linter: [xmllint, lint_cmake, flake8, copyright, pep257]
     steps:
       - uses: actions/checkout@v2
-      - uses: ros-tooling/setup-ros@0.0.25
+      - uses: ros-tooling/setup-ros@0.1.3
       - uses: ros-tooling/action-ros-lint@master
         with:
           distribution: foxy

@@ -38,10 +38,22 @@
 
   <!-- Wheels -->
   <xacro:wheel name="left_wheel" parent="base_link" radius="$(arg wheel_radius)" thickness="$(arg wheel_thickness)">
-    <origin xyz="0 ${$(arg base_width)/2 + $(arg wheel_thickness)/2} 0" rpy="${-pi/2.} 0 0"/>
+    <origin xyz="0 ${$(arg base_width)/2 + $(arg wheel_thickness)/2} 0" rpy="${pi/2.} 0 0"/>
   </xacro:wheel>
   <xacro:wheel name="right_wheel" parent="base_link" radius="$(arg wheel_radius)" thickness="$(arg wheel_thickness)">
     <origin xyz="0 ${-$(arg base_width)/2. - $(arg wheel_thickness)/2.} 0" rpy="${pi/2.} 0 0"/>
   </xacro:wheel>
+
+  <gazebo>
+    <plugin
+      filename="ignition-gazebo-diff-drive-system"
+      name="ignition::gazebo::systems::DiffDrive">
+      <left_joint>left_wheel_joint</left_joint>
+      <right_joint>right_wheel_joint</right_joint>
+      <wheel_separation>$(arg base_width)</wheel_separation>
+      <wheel_radius>$(arg wheel_radius)</wheel_radius>
+      <tf_topic>tf</tf_topic>
+    </plugin>
+  </gazebo>
 
 </robot>

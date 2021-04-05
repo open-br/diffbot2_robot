@@ -1,6 +1,9 @@
 name: Colcon build and test
 
-on: [pull_request]
+on:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   build_and_test:
@@ -8,8 +11,9 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - uses: ros-tooling/setup-ros@0.0.25
-      - uses: ros-tooling/action-ros-ci@0.0.19
+      - uses: ros-tooling/setup-ros@0.1.3
+      - uses: ros-tooling/action-ros-ci@v0.2
+        id: action_ros_ci_step
         with:
           package-name: 
             diffbot2_control
@@ -17,3 +21,8 @@ jobs:
             diffbot2_robot
           target-ros2-distro: foxy
           vcs-repo-file-url: ""
+      - uses: actions/upload-artifact@v1
+        with:
+          if: failure() # upload the logs even when the build fails
+          name: colcon-logs
+          path: ${{ steps.action_ros_ci_step.outputs.ros-workspace-directory-name }}/build/diffbot2_description/test_results/diffbot2_description
