@@ -90,7 +90,9 @@ class TestSpawnLaunchInterface(unittest.TestCase):
             now = time.monotonic()
             if all(expected_topic in topics for expected_topic in expected):
                 return topics
-            elif (now - start) > timeout:
+            elif (now - start) < timeout:
+                continue
+            else:
                 return None
 
 
