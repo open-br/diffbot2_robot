@@ -55,11 +55,11 @@ def generate_launch_description():
     spawn_launch_cmd = IncludeLaunchDescription(PythonLaunchDescriptionSource(spawn_launch),
                         condition=IfCondition(spawn_robot))
 
-    ld =  LaunchDescription()
+    launch_description =  LaunchDescription()
 
-    ld.add_action(spawn_robot_arg)
-    ld.add_action(namespace_arg)
-    ld.add_action(rviz_node)
-    ld.add_action(spawn_launch_cmd)  
+    launch_description.add_action(spawn_robot_arg)
+    launch_description.add_action(namespace_arg)
+    launch_description.add_action(rviz_node)
+    launch_description.add_action(spawn_launch_cmd)  
 
-    return ld    
+    return launch_description    
