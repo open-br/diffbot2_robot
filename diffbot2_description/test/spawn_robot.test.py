@@ -94,11 +94,3 @@ class TestSpawnLaunchInterface(unittest.TestCase):
                 continue
             else:
                 return None
-
-
-@launch_testing.post_shutdown_test()
-class TestProcessTermination(unittest.TestCase):
-
-    def test_exit_code(self, proc_info):
-        # rclpy does not exit normally on SIGINT signal (https://github.com/ros2/rclpy/issues/527)
-        launch_testing.asserts.assertExitCodes(proc_info, [launch_testing.asserts.EXIT_OK, -2])
